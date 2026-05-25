@@ -1,0 +1,333 @@
+{
+  "name": "n8n Lead Capture CRM System",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-capture",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "080640a2-1e74-4eb0-a167-402e4b77877e",
+      "name": "Lead Intake Webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d7122d07-ed93-4712-9633-b96a4964056a",
+              "name": "full_name",
+              "value": "={{$json.body.full_name}}",
+              "type": "string"
+            },
+            {
+              "id": "de6e2403-3cc4-456a-9d22-abb3600168d4",
+              "name": "email",
+              "value": "={{$json.body.email}}",
+              "type": "string"
+            },
+            {
+              "id": "3a1ae95b-6deb-4181-82dd-022f35a7f480",
+              "name": "company",
+              "value": "={{ $json.body.company }}",
+              "type": "string"
+            },
+            {
+              "id": "16258877-b00b-4106-865f-8bb0d395580c",
+              "name": "budget",
+              "value": "={{ $json.body.budget }}",
+              "type": "number"
+            },
+            {
+              "id": "a603ad7b-cb5a-429a-9ab5-5c05c3964595",
+              "name": "service",
+              "value": "={{ $json.body.service }}",
+              "type": "string"
+            },
+            {
+              "id": "784b8e86-c835-4cff-be5a-68f5515a4a70",
+              "name": "message",
+              "value": "={{ $json.body.message }}",
+              "type": "string"
+            },
+            {
+              "id": "0b587918-8f17-4842-a0c4-8f91ec11fc57",
+              "name": "lead_source",
+              "value": "website_form",
+              "type": "string"
+            },
+            {
+              "id": "cde0b467-d1e8-440f-a839-cfb1da8893bc",
+              "name": "created_at",
+              "value": "={{ $now }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        0
+      ],
+      "id": "fb31316b-7455-4696-9111-fdb3bbec1d4e",
+      "name": "Normalize Lead Data"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id",
+          "cachedResultName": "Lead CRM Database",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEET_ID/edit"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_GOOGLE_SHEET_ID/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "full_name": "={{ $json.full_name }}",
+            "email": "={{ $json.email }}",
+            "company": "={{ $json.company }}",
+            "budget": "={{ $json.budget }}",
+            "service": "={{ $json.service }}",
+            "message": "={{ $json.message }}",
+            "lead_source": "={{ $json.lead_source }}",
+            "created_at": "={{ $json.created_at }}",
+            "lead_score": "0",
+            "status": "new"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "full_name",
+              "displayName": "full_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "company",
+              "displayName": "company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "budget",
+              "displayName": "budget",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "service",
+              "displayName": "service",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "lead_source",
+              "displayName": "lead_source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "created_at",
+              "displayName": "created_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "lead_score",
+              "displayName": "lead_score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        448,
+        0
+      ],
+      "id": "e4299582-2f37-45b1-be30-c330fd0deb02",
+      "name": "Store Lead in CRM"
+    },
+    {
+      "parameters": {
+        "jsCode": "const budget = Number($json.budget || 0);\n\nlet score = 0;\n\n// Budget scoring\nif (budget >= 5000) {\n  score += 50;\n} else if (budget >= 2000) {\n  score += 30;\n} else {\n  score += 10;\n}\n\n// Company bonus\nif ($json.company) {\n  score += 20;\n}\n\n// Service scoring\nif ($json.service?.toLowerCase().includes('website')) {\n  score += 10;\n}\n\n// Final lead status\nlet priority = 'low';\n\nif (score >= 70) {\n  priority = 'high';\n} else if (score >= 40) {\n  priority = 'medium';\n}\n\nreturn [\n  {\n    json: {\n      ...$json,\n      lead_score: score,\n      priority\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        0
+      ],
+      "id": "0afbed0f-f23c-45de-aa22-d3c436e581ed",
+      "name": "Calculate Lead Score"
+    },
+    {
+      "parameters": {
+        "chatId": "={{$env.TELEGRAM_CHAT_ID}}",
+        "text": "=\ud83d\ude80 New Lead Captured\n\n\ud83d\udc64 Name: {{$json.full_name}}\n\n\ud83c\udfe2 Company: {{$json.company}}\n\n\ud83d\udcb0 Budget: ${{$json.budget}}\n\n\ud83d\udcc8 Score: {{$json.lead_score}}\n\n\ud83d\udd25 Priority: {{$json.priority}}\n\n\ud83d\udce7 Email: {{$json.email}}\n\n\ud83d\udee0 Service: {{$json.service}}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        896,
+        0
+      ],
+      "id": "befa7c88-1a12-47be-b279-732e99d908a7",
+      "name": "Send Lead Alert"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{$node[\"Calculate Lead Score\"].json[\"email\"]}}",
+        "subject": "We Received Your Request",
+        "emailType": "text",
+        "message": "=Hello {{$node[\"Calculate Lead Score\"].json[\"full_name\"]}},\n\nThank you for contacting us regarding {{$node[\"Calculate Lead Score\"].json[\"service\"]}}.\n\nWe have successfully received your request and our team will review it shortly.\n\nHere\u2019s a quick summary of your inquiry:\n\nCompany: {{$node[\"Calculate Lead Score\"].json[\"company\"]}}\nBudget: ${{$node[\"Calculate Lead Score\"].json[\"budget\"]}}\n\nWe will get back to you within 24 hours.\n\nBest regards,\nLead Capture CRM Team",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1120,
+        0
+      ],
+      "id": "ca52ee9e-af88-4696-bca7-c30ff9dbdf11",
+      "name": "Send Auto Reply"
+    }
+  ],
+  "connections": {
+    "Lead Intake Webhook": {
+      "main": [
+        [
+          {
+            "node": "Normalize Lead Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Lead Data": {
+      "main": [
+        [
+          {
+            "node": "Store Lead in CRM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate Lead Score": {
+      "main": [
+        [
+          {
+            "node": "Send Lead Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Lead in CRM": {
+      "main": [
+        [
+          {
+            "node": "Calculate Lead Score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Lead Alert": {
+      "main": [
+        [
+          {
+            "node": "Send Auto Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "tags": []
+}
